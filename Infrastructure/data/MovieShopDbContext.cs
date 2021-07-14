@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.data
 {
-    //test update
+    
     public class MovieShopDbContext : DbContext
     {
         public MovieShopDbContext(DbContextOptions<MovieShopDbContext> options) : base(options)
@@ -46,10 +46,7 @@ namespace Infrastructure.data
             modelBuilder.Entity<Review>(ConfigureReview);
             modelBuilder.Entity<UserRole>(ConfigureUserRole);
         }
-        private void TestMethod()
-        {
-            Console.Write("for test");
-        }
+        
         private void ConfigureUserRole(EntityTypeBuilder<UserRole> builder)
         {
             builder.ToTable("UserRole");
