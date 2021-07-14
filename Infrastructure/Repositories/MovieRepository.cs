@@ -1,14 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 using ApplicationCore.Entities;
 using ApplicationCore.RepositoryInterface;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using Infrastructure.data;
+
 namespace Infrastructure.Repositories
 {
-    public class MovieRepository : IMovieRepository
+    //inheritent 7 methods from EfRepository, and implememnt 1 from IMovieRepository
+    public class MovieRepository : EfRepository<Movie>, IMovieRepository
     {
-        public List<Movie> GetHighest30GrossingMovies()
+        public MovieRepository(MovieShopDbContext dbContext) : base(dbContext)
         {
-            throw new NotImplementedException();
+        }
+
+        public async Task<List<Movie>> GetHighest30GrossingMovies()
+        {
+            var topMovies = await _dbContext.Movies.OrderByDescending(m => m.Revenue).Take(30).ToListAsync();
+            return topMovies;
         }
     }
 }

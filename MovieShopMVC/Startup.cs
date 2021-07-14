@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ApplicationCore.RepositoryInterface;
 using ApplicationCore.ServiceInterface;
 using Infrastructure.data;
+using Infrastructure.Repositories;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,6 +31,7 @@ namespace MovieShopMVC
         {
             services.AddControllersWithViews();
             services.AddScoped<IMovieService, MovieService>();
+            services.AddScoped<IMovieRepository, MovieRepository>();
             //service.AddScoped<IMovieService,MovieService2>();
             //3rd party IoC Autofac, Ninject
             //ASP.NET Core has built-in support for DI and it has built-in container
@@ -40,6 +43,7 @@ namespace MovieShopMVC
             {
                 options.UseSqlServer(Configuration.GetConnectionString("MovieShopDbConnection"));
             });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
