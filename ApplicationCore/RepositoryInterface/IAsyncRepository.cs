@@ -13,10 +13,12 @@ namespace ApplicationCore.RepositoryInterface
         //async/await
         Task<T> GetById(int id);
         Task<IEnumerable<T>> ListAllAsync();
+        //Linq Expression :- a lambda
         Task<IEnumerable<T>> ListAsync(Expression<Func<T, bool>> filter);
         Task<T> AddAsync(T entity);
         Task<T> UpdateAsync(T entity);
         Task<T> DeleteAsync(T entity);
+        //default filter=null, if there is no records, return all
         Task<int> GetCountAsync(Expression<Func<T, bool>> filter=null);
     }
 }

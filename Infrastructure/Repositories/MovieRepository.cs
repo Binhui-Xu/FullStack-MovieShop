@@ -10,7 +10,7 @@ using Infrastructure.data;
 
 namespace Infrastructure.Repositories
 {
-    //inheritent 7 methods from EfRepository, and implememnt 1 from IMovieRepository
+    //inheritent 7 methods from EfRepository, and implement 1 from IMovieRepository
     public class MovieRepository : EfRepository<Movie>, IMovieRepository
     {
         public MovieRepository(MovieShopDbContext dbContext) : base(dbContext)

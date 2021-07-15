@@ -14,11 +14,11 @@ namespace ApplicationCore.Entities
         public string HashedPassword { get; set; }
         public string Salt { get; set; }
         public string PhoneNumber { get; set; }
-        public Boolean TwoFactorEnabled { get; set; }
-        public DateTime LockOutEndDate { get; set; }
-        public DateTime LastLoginDateTime { get; set; }
-        public Boolean IsLocked { get; set; }
-        public int AccessFailedCount { get; set; }
+        public Boolean? TwoFactorEnabled { get; set; }
+        public DateTime? LockOutEndDate { get; set; }
+        public DateTime? LastLoginDateTime { get; set; }
+        public Boolean? IsLocked { get; set; }
+        public int? AccessFailedCount { get; set; }
 
         //Navigation
         public ICollection<Review> Reviews { get; set; }
