@@ -11,7 +11,7 @@ namespace ApplicationCore.RepositoryInterface
     {
         //common CRUD operations that will be used by all other repositories
         //async/await
-        Task<T> GetById(int id);
+        Task<T> GetByIdAsync(int id);
         Task<IEnumerable<T>> ListAllAsync();
         //Linq Expression :- a lambda
         Task<IEnumerable<T>> ListAsync(Expression<Func<T, bool>> filter);
@@ -20,5 +20,6 @@ namespace ApplicationCore.RepositoryInterface
         Task<T> DeleteAsync(T entity);
         //default filter=null, if there is no records, return all
         Task<int> GetCountAsync(Expression<Func<T, bool>> filter=null);
+        Task<bool> GetExistsAsync(Expression<Func<T, bool>> filter=null);
     }
 }

@@ -32,7 +32,7 @@ namespace MovieShopMVC
             services.AddControllersWithViews();
             services.AddScoped<IMovieService, MovieService>();
             services.AddScoped<IMovieRepository, MovieRepository>();
-            //service.AddScoped<IMovieService,MovieService2>();
+            services.AddScoped<IGenreRepository,GenreRepository>();
             //3rd party IoC Autofac, Ninject
             //ASP.NET Core has built-in support for DI and it has built-in container
             //ASP.NET Framework there was no DI, Autofact, Ninject

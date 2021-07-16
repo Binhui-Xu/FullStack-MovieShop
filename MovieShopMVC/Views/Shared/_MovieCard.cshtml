@@ -1,0 +1,11 @@
+﻿@model ApplicationCore.Models.MovieCardResponseModel
+
+@*bootstrap: responsive website*@
+
+<div class="card mb-4 shadow bg-light">
+@*go to -> localhost/movies/detials/3*@
+    <a asp-controller="Movies" asp-action="Details" asp-route-id="@Model.Id">
+        <img src="@Model.PostUrl" class="img-fluid" alt="@Model.Title" >
+    </a>
+
+</div>

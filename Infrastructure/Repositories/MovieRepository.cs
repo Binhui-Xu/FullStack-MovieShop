@@ -22,5 +22,25 @@ namespace Infrastructure.Repositories
             var topMovies = await _dbContext.Movies.OrderByDescending(m => m.Revenue).Take(30).ToListAsync();
             return topMovies;
         }
+
+        public override async Task<Movie> GetByIdAsync(int id)
+        {
+            var movie = await _dbContext.Movies.Include(m => m.MovieCasts).ThenInclude(m => m.Cast)
+                .Include(m => m.MovieGenres).ThenInclude(m => m.Genre)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (movie == null)
+            {
+                throw new Exception($"No Movie Found with {id}");
+            }
+
+            var movieRating = await _dbContext.Reviews.Where(m => m.MovieId == id)
+                .AverageAsync(r => r == null ? 0 : r.Rating);
+            if (movieRating>0)
+            {
+                movie.Rating = movieRating;
+            }
+
+            return movie;
+        }
     }
 }
