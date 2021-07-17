@@ -41,9 +41,9 @@ namespace MovieShopMVC.Controllers
             //3. ViewData
             //ViewBag.MovieCount = movies.Count();
             var movie = await _movieService.GetTopRevenueMovies();
-            
             return View(movie);
         }
+        
 
         public IActionResult Privacy()
         {
