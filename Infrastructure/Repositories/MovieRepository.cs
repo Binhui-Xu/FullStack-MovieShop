@@ -43,12 +43,12 @@ namespace Infrastructure.Repositories
             return movie;
         }
 
-        public override async Task<IEnumerable<Movie>> ListAsync(Expression<Func<Movie, bool>> filter)
-        {
-            var movie =await _dbContext.Movies.Include(m=>m.MovieGenres).ThenInclude(m=>m.Genre)
-                .Where(filter).ToListAsync();
-            return movie;
-        }
+        // public override async Task<IEnumerable<Movie>> ListAsync(Expression<Func<Movie, bool>> filter)
+        // {
+        //     var movie =await _dbContext.Movies.Include(m=>m.MovieGenres).ThenInclude(m=>m.Genre)
+        //         .Where(filter).ToListAsync();
+        //     return movie;
+        // }
         
     }
 }

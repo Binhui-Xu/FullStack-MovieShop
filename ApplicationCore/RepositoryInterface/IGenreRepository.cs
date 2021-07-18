@@ -7,6 +7,5 @@ namespace ApplicationCore.RepositoryInterface
 {
     public interface IGenreRepository :IAsyncRepository<Genre>
     {
-        Task<List<Genre>> GetAllGenres();
     }
 }

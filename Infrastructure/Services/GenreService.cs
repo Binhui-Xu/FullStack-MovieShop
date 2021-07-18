@@ -47,6 +47,7 @@ namespace Infrastructure.Services
                     Budget = movie.Movie.Budget.GetValueOrDefault()
                 });
             }
+
             return genreDetails;
         }
     }
