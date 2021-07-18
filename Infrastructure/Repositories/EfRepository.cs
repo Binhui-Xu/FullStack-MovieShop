@@ -50,9 +50,9 @@ namespace Infrastructure.Repositories
             }
             return await _dbContext.Set<T>().Where(filter).AnyAsync();
         }
-        public virtual Task<IEnumerable<T>> ListAllAsync()
+        public virtual async Task<IEnumerable<T>> ListAllAsync()
         {
-            throw new NotImplementedException();
+            return await _dbContext.Set<T>().ToListAsync();
         }
 
         public virtual async Task<IEnumerable<T>> ListAsync(Expression<Func<T, bool>> filter)

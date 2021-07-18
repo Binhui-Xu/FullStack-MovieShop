@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using ApplicationCore.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MovieShopMVC.Models;
@@ -20,10 +21,13 @@ namespace MovieShopMVC.Controllers
         //2. Method Injection
         //3. Property Injection
         private readonly IMovieService _movieService;
-        public HomeController(IMovieService movieService)
+        private readonly IGenreService _genreService;
+        public HomeController(IMovieService movieService,IGenreService genreService)
         {
             _movieService = movieService;
+            _genreService = genreService;
         }
+
         //private readonly ILogger<HomeController> _logger;
 
         //public HomeController(ILogger<HomeController> logger)
@@ -43,7 +47,12 @@ namespace MovieShopMVC.Controllers
             var movie = await _movieService.GetTopRevenueMovies();
             return View(movie);
         }
-        
+
+        public async Task<IActionResult> Genre(int gid)
+        {
+            var genre = await _genreService.GetGenreDetails(gid);
+            return View("~/Views/Home/GenreMovies.cshtml",genre);
+        }
 
         public IActionResult Privacy()
         {

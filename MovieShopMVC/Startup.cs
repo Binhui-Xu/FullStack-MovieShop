@@ -33,6 +33,7 @@ namespace MovieShopMVC
             services.AddScoped<IMovieService, MovieService>();
             services.AddScoped<IMovieRepository, MovieRepository>();
             services.AddScoped<IGenreRepository,GenreRepository>();
+            services.AddScoped<IGenreService, GenreService>();
             services.AddScoped<ICastRepository, CastRepository>();
             services.AddScoped<ICastService, CastService>();
             //3rd party IoC Autofac, Ninject

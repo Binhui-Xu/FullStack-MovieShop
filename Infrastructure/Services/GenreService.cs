@@ -7,7 +7,7 @@ using ApplicationCore.ServiceInterface;
 
 namespace Infrastructure.Services
 {
-    public class GenreService :IGenreService<Genre>
+    public class GenreService :IGenreService
     {
         private readonly IGenreRepository _genreRepository;
 
@@ -17,7 +17,7 @@ namespace Infrastructure.Services
         }
         public async Task<List<GenreModel>> GetGenreList()
         {
-            var genres =await _genreRepository.GetAllGenres();
+            var genres =await _genreRepository.ListAllAsync();
             var genresList = new List<GenreModel>();
             foreach (var genre in genres)
             {
@@ -26,6 +26,28 @@ namespace Infrastructure.Services
                 });
             }
             return genresList;
+        }
+
+        public async Task<GenreModel> GetGenreDetails(int id)
+        {
+            var genre =await _genreRepository.GetByIdAsync(id);
+            var genreDetails = new GenreModel()
+            {
+                Id = genre.Id,
+                Name = genre.Name,
+            };
+            genreDetails.Movies = new List<MovieCardResponseModel>();
+            foreach (var movie in genre.MovieGenres)
+            {
+                genreDetails.Movies.Add(new MovieCardResponseModel()
+                {
+                    Id = movie.MovieId,
+                    Title = movie.Movie.Title,
+                    PostUrl = movie.Movie.PosterUrl,
+                    Budget = movie.Movie.Budget.GetValueOrDefault()
+                });
+            }
+            return genreDetails;
         }
     }
 }

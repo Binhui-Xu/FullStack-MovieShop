@@ -1,17 +1,10 @@
-@model List<ApplicationCore.Models.GenreModel>
+@using ApplicationCore.ServiceInterface
+@inject IGenreService _genreService
 
-<div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
-  <ul class="navbar-nav">
-    <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        Dropdown
-      </a>
-      <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-        @foreach (var genre in @Model)
-        {
-          <li><a class="dropdown-item" href="#">@genre.Name</a></li>
-        }
-      </ul>
-    </li>
-  </ul>
-</div>
+
+@foreach (var genre in await _genreService.GetGenreList())
+{
+    @*@Html.ActionLink(genre.Name, "Genre", "Movies", new { genreId = genre.Id }, new { @class = "dropdown-item" })*@
+
+    <a asp-action="Genre" asp-controller="Home" class="dropdown-item" asp-route-gid="@genre.Id"> @genre.Name</a>
+}

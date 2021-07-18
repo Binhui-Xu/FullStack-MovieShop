@@ -26,9 +26,19 @@ namespace Infrastructure.Repositories
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (genre == null)
             {
-                throw new Exception($"No Movie Found with {id}");
+                throw new Exception($"No genre Found with {id}");
             }
             return genre;
+        }
+
+        public override async Task<IEnumerable<Genre>> ListAllAsync()
+        {
+            var genres = await _dbContext.Genres.Include(g => g.MovieGenres).ThenInclude(g => g.Movie).ToListAsync();
+            if (genres ==null)
+            {
+                throw new Exception("No Gnere");
+            }
+            return genres;
         }
     }
 }
