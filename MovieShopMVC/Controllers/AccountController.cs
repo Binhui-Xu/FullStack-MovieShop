@@ -1,8 +1,12 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using ApplicationCore.Models;
 using ApplicationCore.ServiceInterface;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MovieShopMVC.Controllers
@@ -53,45 +57,60 @@ namespace MovieShopMVC.Controllers
             {
                 return View();
             }
-            var user = await _userService.Login(model.Email,model.Password);
+
+            var user = await _userService.Login(model.Email, model.Password);
+
             if (user == null)
             {
-                //wrong password
-                ModelState.AddModelError(string.Empty,"Invalid password");
+                // wrong password
+                ModelState.AddModelError(string.Empty, "Invalid password");
                 return View();
             }
 
-            //correct password
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Email,user.Email),
-                new Claim(ClaimTypes.GivenName,user.LastName),
-                new Claim(ClaimTypes.Surname,user.FirstName),
-                new Claim(ClaimTypes.NameIdentifier,user.Id.ToString())
-
+                 new Claim(ClaimTypes.Email, user.Email),
+                 new Claim(ClaimTypes.GivenName, user.FirstName),
+                 new Claim(ClaimTypes.Surname, user.LastName),
+                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
             };
 
+            // identity object
 
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
+            // create the cookie
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
+            return LocalRedirect("~/");
 
-            //display, firstname, lastname, email
-            //button,link for logout
-            //Cookie based Authentication...
-            //e.g. 10:00AM you login webste
-            //created a MovieShopAuthCookie => 2hours exprision time
-            //Claims,firstname,lastname,id,email - encrypt this info and store in cookie
-            //every time you send a request from browser to server => cookies are sent to server sutomatically
+            // HttpContext
+            // URL, Http method type, form body, browser, Ip address, 
 
-            //make sure user is login successfully
-            //movies/details/22 =>but button
-            //when you click on buy button => POST
-            //purchase table => movieid and userid
-            //user/buymovie => should take userid from cookie and send to database
-            //10:15 AM you wanna buy a movie 
-            //10:30 AM you wanna favorite a movie
+            // correct pasword
+            // display, FirstName, LastName, Email
+            // Button/Link Logout
+            // Cookie Based Authentication....
+
+            // 10:00 AM you login website success
+            // created a MovieShopAuthCookie => 2 hours
+            // Claims, firstname, lastname, id, email - encrypt this info and store in cookie
+            // Every time you make a send a request from browser to server => Cookies are sent to server automatiaclly
+
+            // make sure user is login successfully
+            // movies/details/22 => Buy Button
+            // when u click on BUY Button => POST
+            // Purchase table => movieid, userid
+            // user/buymovie => should take userid from cookie and send to Database
+            // 10:15 AM you wanna buy a movie 
+            // 10:30 AM you wanna fav a movie
+
             return View();
-            
+        }
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            return RedirectToAction("Login");
         }
     }
 }

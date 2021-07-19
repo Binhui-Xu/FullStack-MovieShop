@@ -36,6 +36,7 @@ namespace Infrastructure.Services
                     DateOfBirth=dbUser.DateOfBirth,
                     LastName=dbUser.LastName
                 };
+                return userLoginResponse;
             }
             return null;
         }
