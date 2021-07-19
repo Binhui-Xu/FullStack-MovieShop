@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using ApplicationCore.Models;
 using ApplicationCore.ServiceInterface;
@@ -58,10 +60,36 @@ namespace MovieShopMVC.Controllers
                 ModelState.AddModelError(string.Empty,"Invalid password");
                 return View();
             }
+
             //correct password
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Email,user.Email),
+                new Claim(ClaimTypes.GivenName,user.LastName),
+                new Claim(ClaimTypes.Surname,user.FirstName),
+                new Claim(ClaimTypes.NameIdentifier,user.Id.ToString())
+
+            };
+
+
+
+
+
             //display, firstname, lastname, email
             //button,link for logout
             //Cookie based Authentication...
+            //e.g. 10:00AM you login webste
+            //created a MovieShopAuthCookie => 2hours exprision time
+            //Claims,firstname,lastname,id,email - encrypt this info and store in cookie
+            //every time you send a request from browser to server => cookies are sent to server sutomatically
+
+            //make sure user is login successfully
+            //movies/details/22 =>but button
+            //when you click on buy button => POST
+            //purchase table => movieid and userid
+            //user/buymovie => should take userid from cookie and send to database
+            //10:15 AM you wanna buy a movie 
+            //10:30 AM you wanna favorite a movie
             return View();
             
         }
