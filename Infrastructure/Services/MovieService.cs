@@ -70,23 +70,23 @@ namespace Infrastructure.Services
 
         }
         
-        // public async Task<List<MovieCardResponseModel>> GetMoviesByGenre(int gid)
-        // {
-        //     
-        //     //var genremovies =await _movieRepository.ListAsync(m=>m.MovieGenres == m.MovieGenres.Where(g=>g.GenreId==gid));
-        //     
-        //     var movieCards = new List<MovieCardResponseModel>();
-        //     foreach (var movie in genremovies)
-        //     {
-        //         movieCards.Add(new MovieCardResponseModel
-        //         {
-        //             Id = movie.Id,
-        //             Budget = movie.Budget.GetValueOrDefault(),
-        //             Title = movie.Title,
-        //             PostUrl = movie.PosterUrl
-        //         });
-        //     }
-        //     return movieCards;
-        // }
+        public async Task<List<MovieCardResponseModel>> GetMoviesByGenre(int gid)
+        {
+
+            var genremovies =await _movieRepository.ListAsync(m=>m.Id==gid);
+            
+            var movieCards = new List<MovieCardResponseModel>();
+            foreach (var movie in genremovies)
+            {
+                movieCards.Add(new MovieCardResponseModel
+                {
+                    Id = movie.Id,
+                    Budget = movie.Budget.GetValueOrDefault(),
+                    Title = movie.Title,
+                    PostUrl = movie.PosterUrl
+                });
+            }
+            return movieCards;
+        }
     }
 }

@@ -16,9 +16,11 @@ namespace Infrastructure.Repositories
         {
             _dbContext = dbContext;
         }
-        public Task<T> AddAsync(T entity)
+        public virtual async Task<T> AddAsync(T entity)
         {
-            throw new NotImplementedException();
+            await _dbContext.Set<T>().AddAsync(entity);
+            await _dbContext.SaveChangesAsync();
+            return entity;
         }
 
         public Task<T> DeleteAsync(T entity)
@@ -60,6 +62,7 @@ namespace Infrastructure.Repositories
             //IQuerable : DbSet...
             return await _dbContext.Set<T>().Where(filter).ToListAsync();
         }
+        
 
         public Task<T> UpdateAsync(T entity)
         {
