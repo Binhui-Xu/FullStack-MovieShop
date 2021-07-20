@@ -30,12 +30,12 @@ namespace MovieShopMVC.Controllers
             return View(user);
         }
         [HttpGet]
-        public IActionResult ConfirmPurchase(int mid,decimal price)
+        public IActionResult ConfirmPurchase(int mid)
         {
             var purchaseMovie = new UserPurchaseMovieRequestModel();
             purchaseMovie.MovieId = mid;
             purchaseMovie.UserId = _currentUser.UserId;
-            purchaseMovie.TotalPrice = price;
+            // purchaseMovie.TotalPrice = price;
             return View(purchaseMovie);
         }
         [HttpPost]

@@ -8,6 +8,7 @@ using ApplicationCore.Models;
 using ApplicationCore.RepositoryInterface;
 using ApplicationCore.ServiceInterface;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using RT.Comb;
 
 namespace Infrastructure.Services
 {
@@ -48,12 +49,16 @@ namespace Infrastructure.Services
 
         public async Task<UserPurchaseMovieResponseModel> PurchaseMovie(UserPurchaseMovieRequestModel model)
         {
+            var guid = new RT.Comb.SqlCombProvider(new UnixDateTimeStrategy(),
+                new UtcNoRepeatTimestampProvider().GetTimestamp);
             var purchase = new Purchase()
             {
                 UserId = model.UserId,
                 TotalPrice = model.TotalPrice,
                 PurchaseDateTime = DateTime.Now,
-                MovieId = model.MovieId
+                MovieId = model.MovieId,
+                PurchaseNumber =guid.Create()
+                
             };
             var createPurchase = await _purchaseRepository.AddAsync(purchase);
             var userpurchase = new UserPurchaseMovieResponseModel
@@ -61,7 +66,7 @@ namespace Infrastructure.Services
                 MovieId = createPurchase.MovieId,
                 UserId = createPurchase.UserId,
                 TotalPrice = createPurchase.TotalPrice,
-                PurchaseDateTime = createPurchase.PurchaseDateTime
+                PurchaseDateTime = createPurchase.PurchaseDateTime,
             };
             return userpurchase;
         }

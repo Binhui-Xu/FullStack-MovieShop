@@ -27,20 +27,22 @@
         <p>@Model.Overview</p>
     </div>
     <div class="col">
-        <div class="mt-6 btn-group-vertical">
-            <a type="button" class="btn btn-outline-primary"><i class="fas fa-edit"></i>REVIEW</a>
-            <a type="button" class="btn btn-outline-primary"><i class="fas fa-play"></i>TRAILER</a>
+        <div class="btn-group-vertical">
+            <a type="button" class="btn btn-outline-light mt-3"><i class="fas fa-edit"></i>REVIEW</a>
+            <a type="button" class="btn btn-outline-light mt-3"><i class="fas fa-play"></i>TRAILER</a>
             @if (User.Identity.IsAuthenticated)
             {
-                <a type="button" class="btn btn-outline-primary"
-                   asp-action="ConfirmPurchase" asp-controller="User" asp-route-mid="@Model.Id" asp-route-price="@Model.Price">BUY @Model.Price</a>
+                <a type="button" class="btn btn-outline-light mt-3"
+                   asp-action="ConfirmPurchase" asp-controller="User" asp-route-mid="@Model.Id">
+                    <span>BUY @Model.Price</span>
+                </a>
             }
             else
             {
-                <a type="button" class="btn btn-outline-primary disabled"
-                   asp-action="ConfirmPurchase" asp-controller="User" asp-route-mid="@Model.Id" asp-route-price="@Model.Price">BUY @Model.Price</a>
+                <a type="button" class="btn btn-outline-light mt-3 disabled"
+                   asp-action="ConfirmPurchase" asp-controller="User" asp-route-mid="@Model.Id">BUY @Model.Price</a>
             }
-            <a type="button" class="btn btn-outline-primary disabled">WATCH MOVIE</a>
+            <a type="button" class="btn btn-outline-light mt-3 disabled">WATCH MOVIE</a>
         </div>
     </div>
 </div>

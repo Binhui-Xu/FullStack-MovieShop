@@ -44,7 +44,7 @@ namespace Infrastructure.Services
                 Id = movie.Id, Title = movie.Title, Budget = movie.Budget.GetValueOrDefault(),
                 Rating=movie.Rating,Tagline = movie.Tagline,ReleaseDate = movie.ReleaseDate,
                 Overview = movie.Overview,PosterUrl = movie.PosterUrl,RunTime = movie.RunTime,
-                Revenue = movie.Revenue.GetValueOrDefault()
+                Revenue = movie.Revenue.GetValueOrDefault(), Price = movie.Price
             };
 
             movieDetails.Casts = new List<MovieDetailResponseModel.CastResponseModel>();

@@ -65,9 +65,10 @@ namespace Infrastructure.data
         {
             builder.ToTable("Purchase");
             builder.HasKey(p => p.Id);
+            builder.Property(p => p.Id).ValueGeneratedOnAdd();
             builder.Property(p => p.PurchaseNumber).IsRequired();
-            builder.Property(p => p.TotalPrice).HasColumnType("decimal(18, 2)").HasDefaultValue(9.9m).IsRequired();
-            builder.Property(p => p.PurchaseDateTime).HasDefaultValueSql("getdate()").IsRequired();
+            builder.HasIndex(p => new { p.UserId, p.MovieId }).IsUnique();
+            builder.Property(p => p.TotalPrice).HasColumnType("decimal(5, 2)");
         }
 
         private void ConfigureMovieGenre(EntityTypeBuilder<MovieGenre> builder)
