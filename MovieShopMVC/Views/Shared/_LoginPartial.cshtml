@@ -1,5 +1,5 @@
 ﻿@using ApplicationCore.ServiceInterface
-@inject ICurrentUser currentUser
+@inject ICurrentUser _currentUser
 
 @if (User.Identity.IsAuthenticated)
 {
@@ -7,19 +7,25 @@
         <ul class="navbar-nav ml-auto">
             @*use info in cookie / claims*@
             <li>
-                <div class="dropdown">
-                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                        Dropdown link
+                 <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-user fa-2x"></i>
+                  </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item" asp-action="ViewUserProfile" asp-controller="User">
+                        <div class="justify-content-center">
+                            Signed in as<br>
+                            <strong>@_currentUser.FullName</strong><br>
+                            <span class="text-muted">@_currentUser.Email</span><br>
+                        </div>
                     </a>
-
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
-                        <li><a class="dropdown-item" href="#">purchase movie</a></li>
-                        <li><a class="dropdown-item" href="#">logout</a></li>
-                    </ul>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item">Edit Profile</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" asp-action="PurchasedMovies" asp-controller="User" asp-route-id="@_currentUser.UserId">My Purchased Movies</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" asp-action="Logout" asp-controller="Account">Logout</a>
                 </div>
             </li>
-
         </ul>
     </div>
 }

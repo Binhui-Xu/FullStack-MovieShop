@@ -1,0 +1,19 @@
+@model List<ApplicationCore.Models.MovieCardResponseModel>
+@{
+    ViewData["Title"] = "Purchased Movie";
+}
+
+<h3>Your Movies</h3>
+<div class="rounded mt-5 justify-content-center">
+    <div class="container-fluid bg-light">
+        <div class="row">
+            @foreach (var movie in Model)
+            {
+                <div class="col-2">
+                    <partial name="_MovieCard" model="movie"/>
+                    @*@await Html.PartialAsync(partialViewName:"_MovieCard",movie)*@
+                </div>
+            }
+        </div>
+    </div>
+</div>

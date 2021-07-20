@@ -1,0 +1,30 @@
+@model ApplicationCore.Models.UserDetailResponseModel
+
+@{
+    ViewData["Title"] = "User Profile";
+}
+<h3>My Profile</h3>
+
+<div class="row bg-light">
+    <div class="col-4 justify-content-center">
+        <i class="fas fa-user fa-7x"></i>
+        <div class="card">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><i class="fas fa-id-card"></i>&nbsp;@Model.FirstName&nbsp;@Model.LastName</li>
+                <li class="list-group-item"><i class="fas fa-envelope"></i>&nbsp;@Model.Email</li>
+                <li class="list-group-item"><i class="fas fa-phone"></i>&nbsp;@Model.PhoneNumber</li>
+                <li class="list-group-item"><i class="fas fa-birthday-cake">&nbsp;</i>@Model.DateOfBirth</li>
+            </ul>
+        </div>
+    </div>
+    <div class="col bg-dark text-light">
+        <h4>My Favorite Movies</h4>
+        <div class="card">
+            
+        </div>
+    </div>
+</div>
+
+
+
+

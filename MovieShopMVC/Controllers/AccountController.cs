@@ -38,7 +38,7 @@ namespace MovieShopMVC.Controllers
                 //save to DB
                 return View();
             }
-            var createUsre =await _userService.RegisterUser(model);
+            var createUser =await _userService.RegisterUser(model);
             //redirect to login page
             
             //Model Binding not case senstive

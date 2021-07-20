@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using ApplicationCore.Entities;
@@ -13,11 +14,15 @@ namespace Infrastructure.Services
     public class UserService:IUserService
     {
         private IUserRepository _userRepository;
-        public UserService(IUserRepository userRepository)
+        private IPurchaseRepository _purchaseRepository;
+        private IMovieRepository _movieRepository;
+        public UserService(IUserRepository userRepository,IPurchaseRepository purchaseRepository,IMovieRepository movieRepository)
         {
             _userRepository = userRepository;
+            _purchaseRepository = purchaseRepository;
+            _movieRepository = movieRepository;
         }
-
+        
         public async Task<UserLoginResponseModel> Login(string email, string password)
         {
             var dbUser = await _userRepository.GetUserByEmail(email);
@@ -39,6 +44,61 @@ namespace Infrastructure.Services
                 return userLoginResponse;
             }
             return null;
+        }
+
+        public async Task<UserPurchaseMovieResponseModel> PurchaseMovie(UserPurchaseMovieRequestModel model)
+        {
+            var purchase = new Purchase()
+            {
+                UserId = model.UserId,
+                TotalPrice = model.TotalPrice,
+                PurchaseDateTime = DateTime.Now,
+                MovieId = model.MovieId
+            };
+            var createPurchase = await _purchaseRepository.AddAsync(purchase);
+            var userpurchase = new UserPurchaseMovieResponseModel
+            {
+                MovieId = createPurchase.MovieId,
+                UserId = createPurchase.UserId,
+                TotalPrice = createPurchase.TotalPrice,
+                PurchaseDateTime = createPurchase.PurchaseDateTime
+            };
+            return userpurchase;
+        }
+
+        public async Task<List<MovieCardResponseModel>> GetPurchasedMovies(int id)
+        {
+            var purchases =await _purchaseRepository.ListAsync(p => p.UserId == id);
+            var moviecard = new List<MovieCardResponseModel>();
+            foreach (var purchase in purchases)
+            {
+                 var purchasemovie = await _movieRepository.GetByIdAsync(purchase.MovieId);
+                 moviecard.Add(new MovieCardResponseModel()
+                 {
+                     Id = purchasemovie.Id,
+                     Title = purchasemovie.Title,
+                     PostUrl = purchasemovie.PosterUrl,
+                     Budget = purchasemovie.Budget.GetValueOrDefault()
+                 });
+                
+            }
+            return moviecard;
+        }
+
+        public async Task<UserDetailResponseModel> GetUserDetails(string email)
+        {
+            var user =await _userRepository.GetUserByEmail(email);
+            var userdetail = new UserDetailResponseModel
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                DateOfBirth = user.DateOfBirth,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                
+            };
+            return userdetail;
         }
 
         public async Task<UserRegisterResponseModel> RegisterUser(UserRegisterRequestModel requestModel)
