@@ -8,16 +8,20 @@ using ApplicationCore.Models;
 using ApplicationCore.RepositoryInterface;
 using ApplicationCore.ServiceInterface;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using RT.Comb;
+
 
 namespace Infrastructure.Services
 {
     public class UserService:IUserService
     {
-        private IUserRepository _userRepository;
-        private IPurchaseRepository _purchaseRepository;
-        private IMovieRepository _movieRepository;
-        public UserService(IUserRepository userRepository,IPurchaseRepository purchaseRepository,IMovieRepository movieRepository)
+        private readonly IUserRepository _userRepository;
+        private readonly IPurchaseRepository _purchaseRepository;
+        private readonly IMovieRepository _movieRepository;
+
+        public UserService(IUserRepository userRepository,
+            IPurchaseRepository purchaseRepository,
+            IMovieRepository movieRepository,
+            IFavoriteRepository favoriteRepository)
         {
             _userRepository = userRepository;
             _purchaseRepository = purchaseRepository;
@@ -47,30 +51,6 @@ namespace Infrastructure.Services
             return null;
         }
 
-        public async Task<UserPurchaseMovieResponseModel> PurchaseMovie(UserPurchaseMovieRequestModel model)
-        {
-            var guid = new RT.Comb.SqlCombProvider(new UnixDateTimeStrategy(),
-                new UtcNoRepeatTimestampProvider().GetTimestamp);
-            var purchase = new Purchase()
-            {
-                UserId = model.UserId,
-                TotalPrice = model.TotalPrice,
-                PurchaseDateTime = DateTime.Now,
-                MovieId = model.MovieId,
-                PurchaseNumber =guid.Create()
-                
-            };
-            var createPurchase = await _purchaseRepository.AddAsync(purchase);
-            var userpurchase = new UserPurchaseMovieResponseModel
-            {
-                MovieId = createPurchase.MovieId,
-                UserId = createPurchase.UserId,
-                TotalPrice = createPurchase.TotalPrice,
-                PurchaseDateTime = createPurchase.PurchaseDateTime,
-            };
-            return userpurchase;
-        }
-
         public async Task<List<MovieCardResponseModel>> GetPurchasedMovies(int id)
         {
             var purchases =await _purchaseRepository.ListAsync(p => p.UserId == id);
@@ -85,7 +65,6 @@ namespace Infrastructure.Services
                      PostUrl = purchasemovie.PosterUrl,
                      Budget = purchasemovie.Budget.GetValueOrDefault()
                  });
-                
             }
             return moviecard;
         }
@@ -161,5 +140,24 @@ namespace Infrastructure.Services
                                                                     numBytesRequested: 256 / 8));
             return hashed;
         }
+
+        public async Task<UserResponseModel> GetUserById(int id)
+        {
+            var user = await _userRepository.GetByIdAsync(id);
+            var userResponseModel = new UserResponseModel
+            {
+                Id = user.Id,
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName=user.LastName,
+                DateOfBirth=user.DateOfBirth
+
+            };
+            return userResponseModel;
+        }
+
+        
+
+        
     }
 }

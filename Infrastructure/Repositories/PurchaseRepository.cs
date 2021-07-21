@@ -19,10 +19,6 @@ namespace Infrastructure.Repositories
         public async override Task<IEnumerable<Purchase>> ListAsync(Expression<Func<Purchase, bool>> filter)
         {
             var purchases =await _dbContext.Purchases.Where(filter).ToListAsync();
-            if (purchases ==null)
-            {
-                throw new Exception("No Purchase");
-            }
             return purchases;
         }
     }

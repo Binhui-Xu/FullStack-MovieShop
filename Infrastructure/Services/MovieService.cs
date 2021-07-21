@@ -14,9 +14,11 @@ namespace Infrastructure.Services
     public class MovieService : IMovieService
     {
         private readonly IMovieRepository _movieRepository;
-        public MovieService(IMovieRepository movieRepository)
+        private readonly IReviewRepository _reviewRepository;
+        public MovieService(IMovieRepository movieRepository,IReviewRepository reviewRepository)
         {
             _movieRepository = movieRepository;
+            _reviewRepository = reviewRepository;
         }
         public async Task<List<MovieCardResponseModel>> GetTopRevenueMovies()
         {
@@ -70,13 +72,11 @@ namespace Infrastructure.Services
 
         }
         
-        public async Task<List<MovieCardResponseModel>> GetMoviesByGenre(int gid)
+        public async Task<List<MovieCardResponseModel>> GetTopRatedMovies()
         {
-
-            var genremovies =await _movieRepository.ListAsync(m=>m.Id==gid);
-            
+            var movies = await _movieRepository.GetHighest30RatedMovies();
             var movieCards = new List<MovieCardResponseModel>();
-            foreach (var movie in genremovies)
+            foreach (var movie in movies)
             {
                 movieCards.Add(new MovieCardResponseModel
                 {
@@ -87,6 +87,140 @@ namespace Infrastructure.Services
                 });
             }
             return movieCards;
+        }
+
+        public async Task<List<UserReviewResponseModel>> GetMovieReviews(int id)
+        {
+            var reviews = await _reviewRepository.ListAsync(r=>r.MovieId==id);
+            var movieReviews = new List<UserReviewResponseModel>();
+            foreach (var review in reviews)
+            {
+                movieReviews.Add(new UserReviewResponseModel
+                {
+                    MovieId=review.MovieId,
+                    UserId=review.UserId,
+                    Review=review.ReviewText,
+                    Rating=review.Rating
+                });
+            }
+            return movieReviews;
+        }
+
+        public async Task<List<MovieCardResponseModel>> GetAllMovies()
+        {
+            var movies = await _movieRepository.ListAllAsync();
+            var movieList = new List<MovieCardResponseModel>();
+            foreach (var movie in movies)
+            {
+                movieList.Add(new MovieCardResponseModel
+                {
+                    Id=movie.Id,
+                    Title=movie.Title,
+                    PostUrl=movie.PosterUrl,
+                    Budget=movie.Budget.GetValueOrDefault(),
+                });
+            }
+            return movieList;
+        }
+
+        public async Task<MovieDetailUpdateModel> UpdateMovieDetail(MovieDetailUpdateModel model)
+        {
+            var movie = new Movie
+            {
+                Id = model.Id,
+                Title=model.Title,
+                PosterUrl=model.PosterUrl,
+                BackdropUrl=model.BackdropUrl,
+                Overview=model.Overview,
+                Tagline=model.Tagline,
+                Budget=model.Budget,
+                Revenue=model.Revenue,
+                ImdbUrl=model.ImdbUrl,
+                TmdbUrl=model.TmdbUrl,
+                ReleaseDate=model.ReleaseDate,
+                RunTime=model.RunTime,
+                Price=model.Price,
+                OriginalLanguage=model.OriginalLanguage,
+                CreatedDate=model.CreatedDate,
+                UpdatedDate=model.UpdatedDate,
+                UpdatedBy=model.UpdatedBy,
+                CreatedBy=model.CreatedBy
+            };
+            var update = await _movieRepository.UpdateAsync(movie);
+            var updatemovie = new MovieDetailUpdateModel
+            {
+                Id = update.Id,
+                Title = update.Title,
+                PosterUrl = update.PosterUrl,
+                BackdropUrl = update.BackdropUrl,
+                Overview = update.Overview,
+                Tagline = update.Tagline,
+                Budget = update.Budget,
+                Revenue = update.Revenue,
+                ImdbUrl = update.ImdbUrl,
+                TmdbUrl = update.TmdbUrl,
+                ReleaseDate = update.ReleaseDate,
+                RunTime = update.RunTime,
+                Price = update.Price,
+                OriginalLanguage = update.OriginalLanguage,
+                CreatedDate = update.CreatedDate,
+                UpdatedDate = update.UpdatedDate,
+                UpdatedBy = update.UpdatedBy,
+                CreatedBy = update.CreatedBy
+            };
+            updatemovie.Genres = model.Genres;
+            updatemovie.Casts = model.Casts;
+            return updatemovie;
+        }
+
+        public async Task<MovieDetailUpdateModel> AddMovieDetail(MovieDetailUpdateModel model)
+        {
+            var movie = new Movie
+            {
+                Id = model.Id,
+                Title = model.Title,
+                PosterUrl = model.PosterUrl,
+                BackdropUrl = model.BackdropUrl,
+                Overview = model.Overview,
+                Tagline = model.Tagline,
+                Budget = model.Budget,
+                Revenue = model.Revenue,
+                ImdbUrl = model.ImdbUrl,
+                TmdbUrl = model.TmdbUrl,
+                ReleaseDate = model.ReleaseDate,
+                RunTime = model.RunTime,
+                Price = model.Price,
+                OriginalLanguage = model.OriginalLanguage,
+                CreatedDate = model.CreatedDate,
+                UpdatedDate = model.UpdatedDate,
+                UpdatedBy = model.UpdatedBy,
+                CreatedBy = model.CreatedBy
+            };
+            var create = await _movieRepository.AddAsync(movie);
+            var createmovie = new MovieDetailUpdateModel
+            {
+                Id = create.Id,
+                Title = create.Title,
+                PosterUrl = create.PosterUrl,
+                BackdropUrl = create.BackdropUrl,
+                Overview = create.Overview,
+                Tagline = create.Tagline,
+                Budget = create.Budget,
+                Revenue = create.Revenue,
+                ImdbUrl = create.ImdbUrl,
+                TmdbUrl = create.TmdbUrl,
+                ReleaseDate = create.ReleaseDate,
+                RunTime = create.RunTime,
+                Price = create.Price,
+                OriginalLanguage = create.OriginalLanguage,
+                CreatedDate = create.CreatedDate,
+                UpdatedDate = create.UpdatedDate,
+                UpdatedBy = create.UpdatedBy,
+                CreatedBy = create.CreatedBy
+            };
+            createmovie.Genres = model.Genres;
+            createmovie.Casts = model.Casts;
+            return createmovie;
         }
     }
 }

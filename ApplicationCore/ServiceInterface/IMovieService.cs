@@ -10,6 +10,10 @@ namespace ApplicationCore.ServiceInterface
     {
         Task<List<MovieCardResponseModel>> GetTopRevenueMovies();
         Task<MovieDetailResponseModel> GetMoiveDetails(int id);
-        // Task<List<MovieCardResponseModel>> GetMoviesByGenre(int gid);
+        Task<List<MovieCardResponseModel>> GetTopRatedMovies();
+        Task<List<UserReviewResponseModel>> GetMovieReviews(int id);
+        Task<List<MovieCardResponseModel>> GetAllMovies();
+        Task<MovieDetailUpdateModel> UpdateMovieDetail(MovieDetailUpdateModel model);
+        Task<MovieDetailUpdateModel> AddMovieDetail(MovieDetailUpdateModel model);
     }
 }

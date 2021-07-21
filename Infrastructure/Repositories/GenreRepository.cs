@@ -28,10 +28,6 @@ namespace Infrastructure.Repositories
         public override async Task<IEnumerable<Genre>> ListAllAsync()
         {
             var genres = await _dbContext.Genres.Include(g => g.MovieGenres).ThenInclude(g => g.Movie).ToListAsync();
-            if (genres ==null)
-            {
-                throw new Exception("No Gnere");
-            }
             return genres;
         }
     }

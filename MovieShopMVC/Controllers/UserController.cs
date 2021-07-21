@@ -10,10 +10,12 @@ namespace MovieShopMVC.Controllers
     {
         private ICurrentUser _currentUser;
         private IUserService _userService;
-        public UserController(ICurrentUser currentUser,IUserService userService)
+        private IPurchaseService _purchaseService;
+        public UserController(ICurrentUser currentUser,IUserService userService,IPurchaseService purchaseService)
         {
             _currentUser = currentUser;
             _userService = userService;
+            _purchaseService = purchaseService;
         }
 
         public async Task<IActionResult> PurchasedMovies()
@@ -41,8 +43,9 @@ namespace MovieShopMVC.Controllers
         [HttpPost]
         public async Task<IActionResult> ConfirmPurchase(UserPurchaseMovieRequestModel model)
         {
-            var createPurchase = await _userService.PurchaseMovie(model);
+            var createPurchase = await _purchaseService.PurchaseMovie(model);
             return Redirect("~/");
         }
+        
     }
 }
