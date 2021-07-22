@@ -1,0 +1,6 @@
+<!-- like a partial view -->
+<div class="card mb-4 shadow bg-light">
+    <a [routerLink]="[ '/movie/details/', movieCard.id]">
+        <img src="{{movieCard.postUrl}}" class="img-fluid" alt="{{movieCard.title}}" >
+    </a>
+</div>

@@ -1,0 +1,18 @@
+<!-- //In angular: directives
+
+//built in directive => 
+//customer directives =>  -->
+<div class="rounded">
+    <div class="container-fluid bg-light">
+        <div class="row">
+           <!-- to send data from parent component to child component, use @input decorator inside the child component
+        to emit data from child to parent we use @output decorator -->
+        <div class="col-6" *ngFor="let movie of movies">
+        <app-movie-card [movieCard]='movie'>
+            
+        </app-movie-card>
+    </div>
+        </div>
+    </div>
+</div>
+
