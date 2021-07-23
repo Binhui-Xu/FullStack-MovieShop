@@ -1,1 +1,63 @@
-<p>movie-details works!</p>
+<div class="row text-white" style="background:linear-gradient(rgba(192, 192, 192, 0.45), rgba(192, 192, 192, 0.45)), url({{movie.posterUrl}});background-repeat: no-repeat; background-size: cover;">
+    <div class="col align-content-center">
+            <img src="{{movie.posterUrl}}" class="img-fluid" alt="{{movie.price}}">
+        </div>
+    <div class="col-6 align-content-center">
+        <h2>{{movie.title}}</h2>
+        <p class="">{{movie.tagline}}</p>
+        <div class="row">
+            <div class="col">
+                <span>{{movie.runTime}} m</span> | <span>{{movie.releaseDate}}</span>
+            </div>
+            <div class="col">
+                <div class="float-left ml-2" *ngFor="let genre of movie.genres">
+                    <span class="badge bg-secondary">{{genre.name}}</span>
+                </div>
+            </div>
+        </div>
+
+            <span class="badge text-dark" [ngClass]="{'bg-warning':isMiddle(),'bg-danger':isLow(),'bg-success':isHigh()}">{{movie.rating}}</span>
+   
+        
+        <p>{{movie.overview}}</p>
+    </div>
+    <div class="col">
+        <div class="btn-group-vertical">
+            <a type="button" class="btn btn-outline-light mt-3"><i class="fas fa-edit"></i>REVIEW</a>
+            <a type="button" class="btn btn-outline-light mt-3"><i class="fas fa-play"></i>TRAILER</a>
+              <a type="button" class="btn btn-outline-light mt-3" >
+                    <span>BUY ${{movie.price}}</span>
+              </a>
+            <a type="button" class="btn btn-outline-light mt-3 disabled">WATCH MOVIE</a>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-4 bg-light">
+        <h4>MOVIE FACTS</h4>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><i class="far fa-calendar-alt"></i>&nbsp;Release Date&nbsp;<span class="badge bg-secondary text-white">{{movie.releaseDate}}</span></li>
+          <li class="list-group-item"><i class="fas fa-hourglass-half"></i>&nbsp;Run Time&nbsp;<span class="badge bg-secondary text-white">{{movie.runTime}} m</span></li>
+          <li class="list-group-item"><i class="far fa-money-bill-alt"></i>&nbsp;Box Office&nbsp;<span class="badge bg-secondary text-white">$${{movie.revenue}}</span></li>
+          <li class="list-group-item"><i class="fas fa-dollar-sign"></i>&nbsp;Budget&nbsp;<span class="badge bg-secondary text-white">$${{movie.budget}}</span></li>
+          <li class="list-group-item"><i class="fab fa-imdb"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i class="fas fa-share-square"></i></li>
+        </ul>
+    </div>
+    <div class="col-8">
+        <h4>CAST</h4>
+        <ul class="list-group list-group-flush">
+                <a>
+                    <li class="list-group-item" *ngFor="let cast of movie.casts">
+                        <div class="row" >
+                            <div class="col"><img class="img-fluid castlistimg" src="{{cast.profilePath}}"></div>
+                            <div class="col">{{cast.name}}</div>
+                            <div class="col">{{cast.character}}</div>
+                        </div>
+                    </li>    
+                </a>
+        </ul>
+    </div>
+</div>
+
+

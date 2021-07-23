@@ -27,5 +27,22 @@ export class MovieDetailsComponent implements OnInit {
         })
     });
   }
-
+  isHigh() :boolean{
+    if(this.movie.rating>=8){
+      return true;
+    }
+    return false;
+  }
+  isMiddle() :boolean{
+    if(this.movie.rating<=8 && this.movie.rating>=6){
+      return true;
+    }
+    return false;
+  }
+  isLow() :boolean{
+    if(this.movie.rating<6){
+      return true;
+    }
+    return false;
+  }
 }
