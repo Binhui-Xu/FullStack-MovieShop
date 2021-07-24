@@ -67,7 +67,6 @@ namespace Infrastructure.Services
                         Id = genre.Genre.Id, Name = genre.Genre.Name
                     });
             }
-
             return movieDetails;
 
         }
