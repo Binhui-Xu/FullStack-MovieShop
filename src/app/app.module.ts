@@ -21,6 +21,8 @@ import { EditProfileComponent } from './user/edit-profile/edit-profile.component
 import { MovieDetailsComponent } from './movies/movie-details/movie-details.component';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { NotAuthorizedComponent } from './shared/components/not-authorized/not-authorized.component';
+import { FormsModule , ReactiveFormsModule} from '@angular/forms';
+import { CastDetailsComponent } from './movies/cast-details/cast-details.component';
 
 @NgModule({
   declarations: [
@@ -42,12 +44,15 @@ import { NotAuthorizedComponent } from './shared/components/not-authorized/not-a
     EditProfileComponent,
     MovieDetailsComponent,
     NotFoundComponent,
-    NotAuthorizedComponent
+    NotAuthorizedComponent,
+    CastDetailsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

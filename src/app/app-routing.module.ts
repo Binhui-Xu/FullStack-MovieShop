@@ -5,6 +5,7 @@ import { CreateMovieComponent } from './admin/create-movie/create-movie.componen
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { HomeComponent } from './home/home.component';
+import { CastDetailsComponent } from './movies/cast-details/cast-details.component';
 import { MovieDetailsComponent } from './movies/movie-details/movie-details.component';
 
 const routes: Routes = [
@@ -13,7 +14,8 @@ const routes: Routes = [
   {path: "register",component:RegisterComponent},
   {path: "admin/createmovie",component:CreateMovieComponent},
   {path:"admin/createcast",component:CreateCastComponent},
-  {path:"movie/details/:id",component:MovieDetailsComponent}
+  {path:"movie/details/:id",component:MovieDetailsComponent},
+  {path:"cast/:id",component:CastDetailsComponent}
 ];
 
 @NgModule({

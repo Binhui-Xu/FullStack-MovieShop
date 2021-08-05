@@ -27,6 +27,10 @@ export class MovieDetailsComponent implements OnInit {
         })
     });
   }
+
+  
+
+
   isHigh() :boolean{
     if(this.movie.rating>=8){
       return true;

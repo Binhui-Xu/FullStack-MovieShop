@@ -1,0 +1,28 @@
+<div class="container-fluid card bg-light text-white overflow-auto">
+    <div class="row">
+        <div class="col-3 align-content-center text-black-50 bg-light">
+            <img src="{{cast.profilePath}}" class="img-fluid" alt="{{cast.name}}"><br>
+            <i class="fab fa-facebook-square fa-2x"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i
+                class="fab fa-twitter fa-2x">&nbsp;&nbsp;</i><i class="fab fa-instagram-square fa-2x"></i>
+        </div>
+        <div class="col bg-dark">
+            <h2 class="mb-3">{{cast.name}}</h2>
+            <p *ngIf="cast.gender=='2'">Male</p>
+            <p *ngIf="cast.gender=='1'">Female</p>
+            <p *ngIf="cast.gender!='1'&&cast.gender!='2'">Unknow</p>
+            <a href="{{cast.tmdbUrl}}">Go to Tmdb</a>
+            <h4 class="mt-5 mb-3">MASTERPIECES</h4>
+            <div class="rounded">
+                <div class="container-fluid bg-transparent">
+                    <div class="row">
+                        <div class="col-2" *ngFor="let movie of cast.movies">
+                            <app-movie-card [movieCard]='movie'>
+
+                            </app-movie-card>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

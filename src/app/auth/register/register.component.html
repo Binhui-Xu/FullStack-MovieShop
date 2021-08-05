@@ -1,1 +1,42 @@
-<p>register works!</p>
+<h2>Register</h2>
+<div class="container">
+    <form (ngSubmit)="register()" >
+        <div class="form-group">
+          <label for="exampleInputEmail1">Email address</label>
+          <input type="email" 
+          class="form-control" 
+          aria-describedby="emailHelp" 
+          name="email" id="email" 
+          [(ngModel)]="userRegister.email">
+          <small id="emailHelp" class="form-text text-muted"></small>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Password</label>
+          <input type="password" class="form-control" 
+          id="password" name="password" 
+          [(ngModel)]="userRegister.password">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputFirstName1">First Name</label>
+            <input type="firstname" class="form-control" 
+            id="firstname" name="firstname" 
+            [(ngModel)]="userRegister.firstName">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputLastName1">Last Name</label>
+            <input type="lastname" class="form-control" 
+            id="lastname" name="lastname" 
+            [(ngModel)]="userRegister.lastName">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputLastName1">Date of Birth</label>
+            <input type="date" class="form-control" 
+            id="dob" name="dob" 
+            [(ngModel)]="userRegister.dateOfBirth">
+          </div>
+        <input type="submit" class="btn btn-primary" value="Submit" />
+      </form>
+</div>
+
+<div>
+</div>
