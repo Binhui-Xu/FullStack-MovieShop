@@ -14,6 +14,6 @@ namespace ApplicationCore.ServiceInterface
         Task<List<UserReviewResponseModel>> GetMovieReviews(int id);
         Task<List<MovieCardResponseModel>> GetAllMovies();
         Task<MovieDetailUpdateModel> UpdateMovieDetail(MovieDetailUpdateModel model);
-        Task<MovieDetailUpdateModel> AddMovieDetail(MovieDetailUpdateModel model);
+        Task<MovieDetailUpdateModel> AddNewMovie(MovieRequestModel model);
     }
 }

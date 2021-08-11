@@ -24,9 +24,9 @@ namespace MovieShopAPI.Controllers
         }
         [HttpPost]
         [Route("movie")]
-        public async Task<IActionResult> AddMoive([FromBody]MovieDetailUpdateModel model)
+        public async Task<IActionResult> AddMoive([FromBody]MovieRequestModel model)
         {
-            var movie = await _movieService.AddMovieDetail(model);
+            var movie = await _movieService.AddNewMovie(model);
             if (movie == null)
             {
                 return NotFound("No Update");
@@ -58,5 +58,4 @@ namespace MovieShopAPI.Controllers
             return Ok(purchases);
         }
     }
-
 }

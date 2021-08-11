@@ -15,9 +15,13 @@ namespace Infrastructure.Services
     {
         private readonly IMovieRepository _movieRepository;
         private readonly IReviewRepository _reviewRepository;
-        public MovieService(IMovieRepository movieRepository,IReviewRepository reviewRepository)
+        public MovieService(IMovieRepository movieRepository)
         {
             _movieRepository = movieRepository;
+            
+        }
+        public MovieService(IReviewRepository reviewRepository)
+        {
             _reviewRepository = reviewRepository;
         }
         public async Task<List<MovieCardResponseModel>> GetTopRevenueMovies()
@@ -171,12 +175,10 @@ namespace Infrastructure.Services
             updatemovie.Casts = model.Casts;
             return updatemovie;
         }
-
-        public async Task<MovieDetailUpdateModel> AddMovieDetail(MovieDetailUpdateModel model)
+        public async Task<MovieDetailUpdateModel> AddNewMovie(MovieRequestModel model)
         {
             var movie = new Movie
             {
-                Id = model.Id,
                 Title = model.Title,
                 PosterUrl = model.PosterUrl,
                 BackdropUrl = model.BackdropUrl,

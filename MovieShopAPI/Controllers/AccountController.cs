@@ -55,7 +55,7 @@ namespace MovieShopAPI.Controllers
                 new Claim(JwtRegisteredClaimNames.GivenName,model.FirstName),
                 new Claim(JwtRegisteredClaimNames.FamilyName,model.LastName)
             };
-            //create identity object and strore claims
+            //create identity object and store claims
             var indentityClaim = new ClaimsIdentity();
             indentityClaim.AddClaims(claims);
 
